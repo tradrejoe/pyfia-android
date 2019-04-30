@@ -2,7 +2,9 @@ package com.uxl.pyfia.android.app;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -20,8 +22,12 @@ public class MainActivity extends Activity {
         mWebView = findViewById(R
                 .id.activity_main_webview);
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String proxyUser = sharedPreferences.getString(SettingsActivity.KEY_PREF_PROXY_USER, "");
+        String proxyPwd = sharedPreferences.getString(SettingsActivity.KEY_PREF_PROXY_PASSWORD, "");
+
         // Force links and redirects to open in the WebView instead of in a browser
-        mWebView.setWebViewClient(new WebViewClient());
+        mWebView.setWebViewClient(new AndroidWebViewClient(proxyUser, proxyPwd));
 
         // Enable Javascript
         WebSettings webSettings = mWebView.getSettings();
@@ -29,7 +35,6 @@ public class MainActivity extends Activity {
 
         // REMOTE RESOURCE
         mWebView.loadUrl("http://www.pyfia.com");
-        mWebView.setWebViewClient(new AndroidWebViewClient());
 
         // LOCAL RESOURCE
         // mWebView.loadUrl("file:///android_asset/index.html");
