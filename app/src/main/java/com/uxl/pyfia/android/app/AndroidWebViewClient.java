@@ -45,13 +45,15 @@ class AndroidWebViewClient extends WebViewClient {
     @SuppressWarnings("deprecation")
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        Uri uri = Uri.parse(url);
+        return false;
+        /*Uri uri = Uri.parse(url);
         if (uri.getHost() != null && uri.getHost().toLowerCase().contains("pyfia.com")) {
+
             return false;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         view.getContext().startActivity(intent);
-        return true;
+        return true;*/
     }
 
     @Override
